@@ -1,50 +1,53 @@
 # CYD RGB565 Video Player
 
-A simple RGB565 video player for the **ESP32 CYD 2.8" (ESP32-2432S028)**.
+A simple RGB565 video player for the ESP32 CYD 2.8" (ESP32-2432S028).
 
-It plays `320x240` RGB565 video files directly from the board's built-in microSD card slot.
+## 1. What you need
+- ESP32 CYD 2.8" (ESP32-2432S028)
+- microSD card
+- USB data cable
+- Computer
+- A video file
 
-## Features
+## 2. Download the project
+git clone https://github.com/DaBabyfoxx/CYD-RGB565-Video-Playe.git
 
-- ESP32 CYD 2.8" display
-- ILI9341 TFT — 320x240
-- Built-in microSD card slot
-- Automatically finds the first `.rgb565` video file
-- Continuous video playback
-- No external SD card module required
+## 3. Install PlatformIO
+Install Visual Studio Code and the PlatformIO IDE extension.
 
-## SD Card
+## 4. Open and upload
+Open the project in Visual Studio Code, connect the CYD with a USB data cable, then click Upload in PlatformIO.
 
-Place your RGB565 video directly in the root of the microSD card:
-
-    /video.rgb565
-
-The file does not have to be named `video.rgb565`. The player automatically searches for the first file ending in `.rgb565`.
-
-## Convert MP4 to RGB565
-
+## 5. Convert your video
 Install FFmpeg:
 
-    sudo apt install ffmpeg
+sudo apt update && sudo apt install ffmpeg
 
-Convert a video to the format required by the player:
+Convert your video:
 
-    ffmpeg -i "video.mp4" -vf "fps=30,scale=320:240" -pix_fmt rgb565le -f rawvideo "video.rgb565"
+ffmpeg -i "video.mp4" -vf "fps=30,scale=320:240" -pix_fmt rgb565le -f rawvideo "video.rgb565"
 
-Then copy `video.rgb565` directly to the root of the microSD card.
+## 6. Copy the video to the SD card
+Copy the resulting .rgb565 file directly to the root of the microSD card. Do not put it inside a folder.
 
-## PlatformIO
+## 7. Start the player
+Insert the microSD card into the CYD and power it on. The player automatically searches for the first .rgb565 file and starts playback.
 
-Open the project with PlatformIO and upload the firmware to your ESP32.
+## 8. Video requirements
+- Resolution: 320x240
+- Frame rate: 30 FPS
+- Pixel format: RGB565
+- Format: RAW RGB565
 
-Main source file:
+## 9. Built-in SD pins
+| Function | GPIO |
+|---|---:|
+| CS | 5 |
+| SCK | 18 |
+| MISO | 19 |
+| MOSI | 23 |
 
-    src/main.cpp
-
-## Pin Configuration
-
-### ILI9341 TFT
-
+## 10. TFT pins
 | Function | GPIO |
 |---|---:|
 | SCK | 14 |
@@ -54,33 +57,8 @@ Main source file:
 | DC | 2 |
 | Backlight | 21 |
 
-### Built-in microSD
-
-| Function | GPIO |
-|---|---:|
-| CS | 5 |
-| SCK | 18 |
-| MISO | 19 |
-| MOSI | 23 |
-
-## Compatible Hardware
-
-Tested on:
-
-**ESP32-2432S028 CYD 2.8"**
-
-Display:
-
-**ILI9341 — 320x240**
-
 ## Limitations
-
-The video must be converted to RAW RGB565 before playback.
-
-This project does not directly decode MP4/H.264 files on the ESP32.
-
-The display resolution is 320x240.
+MP4/H.264 is not decoded directly. Videos must be converted to RAW RGB565 first.
 
 ## License
-
-This project is provided for free use and modification.
+Free to use and modify.
