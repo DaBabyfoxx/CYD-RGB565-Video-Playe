@@ -19,7 +19,7 @@ Open PowerShell in the project folder and run:
 
 Linux and Windows:
 
-    ffmpeg -i input.mp4 -vf "fps=30,scale=320:240" -pix_fmt rgb565le -f rawvideo video.rgb565
+    ffmpeg -y -i "$(zenity --file-selection --title='Alege MP4-ul')" -vf "scale=320:240,fps=30" -pix_fmt rgb565le -f rawvideo ~/Downloads/video.rgb565
 
 Copy video.rgb565 to the root of the microSD card.
 
