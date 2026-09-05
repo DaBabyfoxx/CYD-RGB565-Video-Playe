@@ -19,5 +19,5 @@ print("Se converteste...")
 print("Din:", video)
 print("In:", output)
 
-subprocess.run(["ffmpeg", "-y", "-i", video, "-vf", "fps=30,scale=320:240", "-pix_fmt", "rgb565le", "-f", "rawvideo", output], check=True)
+subprocess.run(["ffmpeg", "-y", "-i", video, "-vf", "scale=320:240,fps=30", "-pix_fmt", "rgb565le", "-f", "rawvideo", output], check=True)
 print("GATA! video.rgb565 a fost creat.")
