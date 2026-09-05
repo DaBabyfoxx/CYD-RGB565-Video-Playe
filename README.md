@@ -1,51 +1,51 @@
 # CYD RGB565 Video Player
 
-Un player video simplu pentru **ESP32 CYD 2.8" (ESP32-2432S028)**.
+A simple RGB565 video player for the **ESP32 CYD 2.8" (ESP32-2432S028)**.
 
-Redă videoclipuri `RGB565` de **320×240** direct de pe cardul microSD integrat al plăcii.
+It plays `320x240` RGB565 video files directly from the board's built-in microSD card slot.
 
-## Caracteristici
+## Features
 
-- ESP32 CYD 2.8"
-- Display ILI9341 320×240
-- Card microSD integrat
-- Caută automat primul fișier `.rgb565` de pe card
-- Redare continuă în buclă
-- Nu este nevoie de un modul SD extern
+- ESP32 CYD 2.8" display
+- ILI9341 TFT — 320x240
+- Built-in microSD card slot
+- Automatically finds the first `.rgb565` video file
+- Continuous video playback
+- No external SD card module required
 
-## Structura cardului SD
+## SD Card
 
-Pune videoclipul direct în rădăcina cardului:
+Place your RGB565 video directly in the root of the microSD card:
 
     /video.rgb565
 
-Numele nu trebuie neapărat să fie `video.rgb565`. Playerul caută automat primul fișier care se termină în `.rgb565`.
+The file does not have to be named `video.rgb565`. The player automatically searches for the first file ending in `.rgb565`.
 
-## Conversie MP4 → RGB565
+## Convert MP4 to RGB565
 
-Instalează FFmpeg:
+Install FFmpeg:
 
     sudo apt install ffmpeg
 
-Pentru un videoclip 320×240:
+Convert a video to the format required by the player:
 
     ffmpeg -i "video.mp4" -vf "fps=30,scale=320:240" -pix_fmt rgb565le -f rawvideo "video.rgb565"
 
-Apoi copiază `video.rgb565` direct pe cardul microSD.
+Then copy `video.rgb565` directly to the root of the microSD card.
 
 ## PlatformIO
 
-Deschide proiectul în PlatformIO și încarcă firmware-ul pe ESP32.
+Open the project with PlatformIO and upload the firmware to your ESP32.
 
-Fișierul principal este:
+Main source file:
 
     src/main.cpp
 
-## Pinii folosiți
+## Pin Configuration
 
-### TFT ILI9341
+### ILI9341 TFT
 
-| Funcție | GPIO |
+| Function | GPIO |
 |---|---:|
 | SCK | 14 |
 | MOSI | 13 |
@@ -54,33 +54,33 @@ Fișierul principal este:
 | DC | 2 |
 | Backlight | 21 |
 
-### microSD integrat
+### Built-in microSD
 
-| Funcție | GPIO |
+| Function | GPIO |
 |---|---:|
 | CS | 5 |
 | SCK | 18 |
 | MISO | 19 |
 | MOSI | 23 |
 
-## Compatibilitate
+## Compatible Hardware
 
-Testat pe:
+Tested on:
 
 **ESP32-2432S028 CYD 2.8"**
 
 Display:
 
-**ILI9341 — 320×240**
+**ILI9341 — 320x240**
 
-## Limitări
+## Limitations
 
-Videoclipul trebuie convertit înainte în format RAW RGB565.
+The video must be converted to RAW RGB565 before playback.
 
-ESP32-ul nu decodează direct videoclipuri MP4/H.264 în acest proiect.
+This project does not directly decode MP4/H.264 files on the ESP32.
 
-Rezoluția afișată este 320×240.
+The display resolution is 320x240.
 
-## Licență
+## License
 
-Acest proiect este oferit pentru utilizare și modificare liberă.
+This project is provided for free use and modification.
