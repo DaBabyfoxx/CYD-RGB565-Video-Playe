@@ -1,64 +1,40 @@
 # CYD RGB565 Video Player
 
-A simple RGB565 video player for the ESP32 CYD 2.8" (ESP32-2432S028).
+ESP32-2432S028 (CYD) RGB565 video player using the built-in microSD card.
 
-## 1. What you need
-- ESP32 CYD 2.8" (ESP32-2432S028)
-- microSD card
-- USB data cable
-- Computer
-- A video file
+## Linux
 
-## 2. Download the project
-git clone https://github.com/DaBabyfoxx/CYD-RGB565-Video-Playe.git
+Run:
 
-## 3. Install PlatformIO
-Install Visual Studio Code and the PlatformIO IDE extension.
+    ./setup-linux.sh
 
-## 4. Open and upload
-Open the project in Visual Studio Code, connect the CYD with a USB data cable, then click Upload in PlatformIO.
+## Windows
 
-## 5. Convert your video
-Install FFmpeg:
+Open PowerShell in the project folder and run:
 
-sudo apt update && sudo apt install ffmpeg
+    Set-ExecutionPolicy -Scope Process Bypass
+    .\setup-windows.ps1
 
-Convert your video:
+## Convert MP4 to RGB565
 
-ffmpeg -i "video.mp4" -vf "fps=30,scale=320:240" -pix_fmt rgb565le -f rawvideo "video.rgb565"
+Linux and Windows:
 
-## 6. Copy the video to the SD card
-Copy the resulting .rgb565 file directly to the root of the microSD card. Do not put it inside a folder.
+    ffmpeg -i input.mp4 -vf "fps=30,scale=320:240" -pix_fmt rgb565le -f rawvideo video.rgb565
 
-## 7. Start the player
-Insert the microSD card into the CYD and power it on. The player automatically searches for the first .rgb565 file and starts playback.
+Copy video.rgb565 to the root of the microSD card.
 
-## 8. Video requirements
+## Video
+
 - Resolution: 320x240
-- Frame rate: 30 FPS
-- Pixel format: RGB565
-- Format: RAW RGB565
+- FPS: 30
+- Format: RGB565
 
-## 9. Built-in SD pins
-| Function | GPIO |
-|---|---:|
-| CS | 5 |
-| SCK | 18 |
-| MISO | 19 |
-| MOSI | 23 |
+The ESP32 automatically finds a .rgb565 file on the SD card and plays it repeatedly.
 
-## 10. TFT pins
-| Function | GPIO |
-|---|---:|
-| SCK | 14 |
-| MOSI | 13 |
-| MISO | 12 |
-| CS | 15 |
-| DC | 2 |
-| Backlight | 21 |
+## Hardware
 
-## Limitations
-MP4/H.264 is not decoded directly. Videos must be converted to RAW RGB565 first.
+TFT: SCK GPIO14, MOSI GPIO13, MISO GPIO12, CS GPIO15, DC GPIO2, BL GPIO21
 
-## License
-Free to use and modify.
+Built-in SD: SCK GPIO18, MISO GPIO19, MOSI GPIO23, CS GPIO5
+
+No external SD module is required.
